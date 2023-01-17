@@ -53,6 +53,9 @@ body {
     color: #FFFFFF;
     justify-content: center;
 }
+.button:hover {
+    background: #6ba802
+}   
 
 .lvlSelection {
     display: flex;
@@ -75,6 +78,10 @@ body {
     text-align: center;
     justify-content: center;
     color: #0080C1;
+    border: none;
+}
+.lvl:hover {
+    background-color: #7AC100;
 }
 
 .openTitle {
