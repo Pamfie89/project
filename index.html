@@ -1,143 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Twin-Cards</title>
-    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="index.css" />
+  </head>
+  <body>
+    <div class="app"></div>
 
-</head>
-<body>
-
-    <div class="app">
-    
-    </div>
-  
     <script>
       window.application = {
-          blocks: {},
-          screens: {},
-          renderScreen: function(screenName) {
-            window.application.timers.forEach(id => {
-              clearInterval(id);
-            });
-            window.application.screens[`${screenName}`](document.querySelector('.app'));
-          },
-          renderBlock: function(blockName, container) {
-            
-            window.application.blocks[`${blockName}`](container);
-          },
-          timers: [],
-          time: {},
-          dif: 0
-      }
+        blocks: {},
+        screens: {},
+        renderScreen: function (screenName) {
+          window.application.timers.forEach((id) => {
+            clearInterval(id);
+          });
+          window.application.screens[`${screenName}`](
+            document.querySelector(".app")
+          );
+        },
+        renderBlock: function (blockName, container) {
+          window.application.blocks[`${blockName}`](container);
+        },
+        timers: [],
+        time: {},
+        dif: 0,
+      };
     </script>
-    <script src="request.js"></script>        
+    <script src="request.js"></script>
+    <script src="template-engine.js"></script>
     <script src="index.js"></script>
 
-
-<script>
-
-window.application.screens['open'] = renderOpenScreen; 
-window.application.screens['game1'] = renderGame1Screen;
-window.application.screens['game2'] = renderGame2Screen;
-window.application.screens['game3'] = renderGame3Screen;
-
-window.application.blocks['open-content'] = renderOpenContent;
-
-window.addEventListener('DOMContentLoaded', function() {
-  window.application.renderScreen('open');
-});
-
-function renderOpenScreen() {
-	const app = document.querySelector('.app');
-    app.textContent = '';
-
-    const content = document.createElement('div');
-    content.classList.add('openContent');
-
-    window.application.renderBlock('open-content', content);
-
-    app.appendChild(content);
-};
-
-function renderOpenContent(container) {
-    const title = document.createElement('h1');
-    title.textContent = "Выбери сложность"
-    title.classList.add('openTitle');
-
-    const div = document.createElement('div');
-    div.classList.add('lvlSelection');
-    const lvl_1 = document.createElement('button');
-    lvl_1.textContent = '1';
-    lvl_1.classList.add('lvl')
-    lvl_1.addEventListener('click', (e) => {
-      e.preventDefault();
-      window.application.dif = 1;
-    });
-    const lvl_2 = document.createElement('button');
-    lvl_2.textContent = '2';
-    lvl_2.classList.add('lvl')
-    lvl_2.addEventListener('click', (e) => {
-      e.preventDefault();
-      window.application.dif = 2;
-    });
-    const lvl_3 = document.createElement('button');
-    lvl_3.textContent = '3';
-    lvl_3.classList.add('lvl')
-    lvl_3.addEventListener('click', (e) => {
-      e.preventDefault();
-      window.application.dif = 3;
-    });
-    
-    const btn = document.createElement('button');
-    btn.textContent = 'Старт';
-    btn.classList.add('button');
-    btn.addEventListener('click', () => {
-      if (!window.application.dif >= 1) {
-        alert('Выберите уровень сложности!')
-      } else if (window.application.dif = 1) {
-        window.application.renderScreen('game1');
-      } else if (window.application.dif = 2) {
-        window.application.renderScreen('game2');
-      } else if (window.application.dif = 3) {
-        window.application.renderScreen('game3');
-      }
-    });
-    
-    div.appendChild(lvl_1);
-    div.appendChild(lvl_2);
-    div.appendChild(lvl_3);
-
-    container.appendChild(title);
-    container.appendChild(div);
-    container.appendChild(btn);
-};
-
-function renderGame1Screen() {
-	const app = document.querySelector('.app');
-    app.textContent = '';
-};
-
-function renderGame2Screen() {
-	const app = document.querySelector('.app');
-    app.textContent = '';
-};
-
-function renderGame3Screen() {
-	const app = document.querySelector('.app');
-    app.textContent = '';
-};
-
-
-
-
-
-
-
-</script>
-
-
-</body>
+    <script></script>
+  </body>
 </html>

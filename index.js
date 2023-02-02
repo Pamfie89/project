@@ -98,6 +98,8 @@ function cardTemplate(card) {
     },
   };
 }
+let cardResult = [];
+let gamePairs = [];
 
 window.addEventListener("DOMContentLoaded", function () {
   window.application.renderScreen("open");
@@ -194,7 +196,13 @@ function renderTest1Screen() {
 
   app.appendChild(content);
 }
-
+for (let i = 0; i < 3; i++) {
+  let randomIndex = Math.floor(Math.random() * (cards.length - i)) + i;
+  cardResult.push(cards[randomIndex]);
+  let result = cardResult.concat(cardResult);
+  gamePairs.push(result);
+  console.log(gamePairs);
+}
 function renderTest1Block(container) {
   const headerDiv = document.createElement("div");
   headerDiv.classList.add("headerDiv");
@@ -222,10 +230,12 @@ function renderTest1Block(container) {
 
   const cardContainer = document.createElement("div");
   cardContainer.classList.add("cardContainer");
-  cardContainer.appendChild(templateEngine(cards.map(cardTemplate)));
+  cardContainer.appendChild(templateEngine(gamePairs[2].map(cardTemplate)));
 
   container.appendChild(headerDiv);
   container.appendChild(cardContainer);
+  const gameCard = cardContainer.querySelectorAll(".card__img");
+  gameCard.forEach((cardImg) => cardImg.addEventListener('click', (e) => e.preventDefault(), gameCard.src = cardsBack[1].src));
 }
 
 function renderTest2Screen() {

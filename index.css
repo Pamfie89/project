@@ -105,9 +105,8 @@ body {
   border-radius: 12px;
   display: flex;
   flex-wrap: wrap;
-  align-content: center;
-  align-items: center;
   gap: 15px;
+  justify-content: center;
 }
 
 .card__img {
