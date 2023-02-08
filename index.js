@@ -10,7 +10,42 @@ window.application.blocks["test1-block"] = renderTest1Block;
 window.application.blocks["test2-block"] = renderTest2Block;
 
 cardsBack = [
-  { src: "./cards/рубашка.jpg", value: "cardBack" }
+  { src: "./cards/рубашка.jpg", value: "cardBack" },
+  { src: "./cards/рубашка.jpg", value: "cardBack" },
+  { src: "./cards/рубашка.jpg", value: "cardBack" },
+  { src: "./cards/рубашка.jpg", value: "cardBack" },
+  { src: "./cards/рубашка.jpg", value: "cardBack" },
+  { src: "./cards/рубашка.jpg", value: "cardBack" },
+  { src: "./cards/рубашка.jpg", value: "cardBack" },
+  { src: "./cards/рубашка.jpg", value: "cardBack" },
+  { src: "./cards/рубашка.jpg", value: "cardBack" },
+  { src: "./cards/рубашка.jpg", value: "cardBack" },
+  { src: "./cards/рубашка.jpg", value: "cardBack" },
+  { src: "./cards/рубашка.jpg", value: "cardBack" },
+  { src: "./cards/рубашка.jpg", value: "cardBack" },
+  { src: "./cards/рубашка.jpg", value: "cardBack" },
+  { src: "./cards/рубашка.jpg", value: "cardBack" },
+  { src: "./cards/рубашка.jpg", value: "cardBack" },
+  { src: "./cards/рубашка.jpg", value: "cardBack" },
+  { src: "./cards/рубашка.jpg", value: "cardBack" },
+  { src: "./cards/рубашка.jpg", value: "cardBack" },
+  { src: "./cards/рубашка.jpg", value: "cardBack" },
+  { src: "./cards/рубашка.jpg", value: "cardBack" },
+  { src: "./cards/рубашка.jpg", value: "cardBack" },
+  { src: "./cards/рубашка.jpg", value: "cardBack" },
+  { src: "./cards/рубашка.jpg", value: "cardBack" },
+  { src: "./cards/рубашка.jpg", value: "cardBack" },
+  { src: "./cards/рубашка.jpg", value: "cardBack" },
+  { src: "./cards/рубашка.jpg", value: "cardBack" },
+  { src: "./cards/рубашка.jpg", value: "cardBack" },
+  { src: "./cards/рубашка.jpg", value: "cardBack" },
+  { src: "./cards/рубашка.jpg", value: "cardBack" },
+  { src: "./cards/рубашка.jpg", value: "cardBack" },
+  { src: "./cards/рубашка.jpg", value: "cardBack" },
+  { src: "./cards/рубашка.jpg", value: "cardBack" },
+  { src: "./cards/рубашка.jpg", value: "cardBack" },
+  { src: "./cards/рубашка.jpg", value: "cardBack" },
+  { src: "./cards/рубашка.jpg", value: "cardBack" },
 ];
 cards = [
   { src: "./cards/6 бубны.jpg", value: "Б6" },
@@ -59,6 +94,7 @@ function cardTemplate(card) {
       cls: "card__img",
       attrs: {
         src: card.src,
+        value: card.value,
       },
     },
   };
@@ -200,7 +236,18 @@ function renderTest1Block(container) {
   container.appendChild(headerDiv);
   container.appendChild(cardContainer);
   const gameCard = cardContainer.querySelectorAll(".card__img");
-  gameCard.forEach((cardImg) => cardImg.addEventListener('click', (e) => e.preventDefault(), gameCard.src = cardsBack[1].src));
+  gameCard.forEach((cardImg) =>
+    cardImg.addEventListener("click", (e) => {
+      e.preventDefault();
+      window.application.thisCard = cardImg.value;
+    })
+  );
+  function fivesec() {
+    gameCard.forEach((cardImg) => {
+      cardImg.src = cardsBack[0].src;
+    });
+  }
+  setTimeout(fivesec, 5000);
 }
 
 function renderTest2Screen() {
