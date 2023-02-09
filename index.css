@@ -101,7 +101,6 @@ body {
 
 .gameContent .cardContainer {
   width: 975px;
-  height: 600px;
   border-radius: 12px;
   display: flex;
   flex-wrap: wrap;
