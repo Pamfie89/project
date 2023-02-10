@@ -1,13 +1,10 @@
+
+
 window.application.screens["open"] = renderOpenScreen;
 window.application.screens["game"] = renderGameScreen;
-window.application.screens["game2"] = renderGame2Screen;
-window.application.screens["game3"] = renderGame3Screen;
-window.application.screens["test1"] = renderTest1Screen;
-window.application.screens["test2"] = renderTest2Screen;
 
 window.application.blocks["open-content"] = renderOpenContent;
 window.application.blocks["game-block"] = renderGameBlock;
-window.application.blocks["test2-block"] = renderTest2Block;
 
 cardsBack = [
   { src: "./cards/рубашка.jpg", value: "cardBack" },
@@ -207,10 +204,13 @@ function renderGameBlock(container) {
   const cardContainer = document.createElement("div");
   cardContainer.classList.add("cardContainer");
   if (window.application.dif === 1) {
+    gamePairs[2].sort(()=>Math.random()-0.5)
     cardContainer.appendChild(templateEngine(gamePairs[2].map(cardTemplate)));
   } else if (window.application.dif === 2) {
+    gamePairs[5].sort(()=>Math.random()-0.5)
     cardContainer.appendChild(templateEngine(gamePairs[5].map(cardTemplate)));
   } else if (window.application.dif === 3) {
+    gamePairs[8].sort(()=>Math.random()-0.5)
     cardContainer.appendChild(templateEngine(gamePairs[8].map(cardTemplate)));
   }
 
@@ -231,75 +231,10 @@ function renderGameBlock(container) {
   setTimeout(fivesec, 5000);
 }
 
-function renderGame2Screen() {
-  const app = document.querySelector(".app");
-  app.textContent = "";
-}
-
-function renderGame3Screen() {
-  const app = document.querySelector(".app");
-  app.textContent = "";
-}
-
-function renderTest1Screen() {
-  const app = document.querySelector(".app");
-  app.textContent = "";
-
-  const content = document.createElement("div");
-  content.classList.add("gameContent");
-
-  window.application.renderBlock("test1-block", content);
-
-  app.appendChild(content);
-}
 for (let i = 0; i < 9; i++) {
   let randomIndex = Math.floor(Math.random() * (cards.length - i)) + i;
   cardResult.push(cards[randomIndex]);
   let result = cardResult.concat(cardResult);
   gamePairs.push(result);
-}
-
-function renderTest2Screen() {
-  const app = document.querySelector(".app");
-  app.textContent = "";
-
-  const content = document.createElement("div");
-  content.classList.add("gameContent");
-
-  window.application.renderBlock("test2-block", content);
-
-  app.appendChild(content);
-}
-
-function renderTest2Block(container) {
-  const headerDiv = document.createElement("div");
-  headerDiv.classList.add("headerDiv");
-
-  const timer = document.createElement("div");
-  timer.classList.add("timer");
-  const min = document.createElement("div");
-  min.textContent = "min";
-  min.classList.add("min");
-  const sec = document.createElement("div");
-  sec.textContent = "sec";
-  sec.classList.add("sec");
-  const gameTime = document.createElement("div");
-  gameTime.classList.add("gameTime");
-  gameTime.textContent = "00.00";
-  timer.appendChild(min);
-  timer.appendChild(sec);
-  timer.appendChild(gameTime);
-  headerDiv.appendChild(timer);
-
-  const btn = document.createElement("button");
-  btn.classList.add("button");
-  btn.textContent = "Начать заново";
-  headerDiv.appendChild(btn);
-
-  const cardContainer = document.createElement("div");
-  cardContainer.classList.add("cardContainer");
-  cardContainer.appendChild(templateEngine(cardsBack.map(cardTemplate)));
-
-  container.appendChild(headerDiv);
-  container.appendChild(cardContainer);
+  console.log(gamePairs);
 }
