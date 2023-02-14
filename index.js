@@ -1,5 +1,3 @@
-
-
 window.application.screens["open"] = renderOpenScreen;
 window.application.screens["game"] = renderGameScreen;
 
@@ -204,13 +202,16 @@ function renderGameBlock(container) {
   const cardContainer = document.createElement("div");
   cardContainer.classList.add("cardContainer");
   if (window.application.dif === 1) {
-    gamePairs[2].sort(()=>Math.random()-0.5)
+    gamePairs[2].sort(() => Math.random() - 0.5);
+    window.application.cards.push(gamePairs[2]);
     cardContainer.appendChild(templateEngine(gamePairs[2].map(cardTemplate)));
   } else if (window.application.dif === 2) {
-    gamePairs[5].sort(()=>Math.random()-0.5)
+    gamePairs[5].sort(() => Math.random() - 0.5);
+    window.application.cards.push(gamePairs[5]);
     cardContainer.appendChild(templateEngine(gamePairs[5].map(cardTemplate)));
   } else if (window.application.dif === 3) {
-    gamePairs[8].sort(()=>Math.random()-0.5)
+    gamePairs[8].sort(() => Math.random() - 0.5);
+    window.application.cards.push(gamePairs[8]);
     cardContainer.appendChild(templateEngine(gamePairs[8].map(cardTemplate)));
   }
 
@@ -220,7 +221,10 @@ function renderGameBlock(container) {
   gameCard.forEach((cardImg) =>
     cardImg.addEventListener("click", (e) => {
       e.preventDefault();
-      window.application.thisCard = cardImg.value;
+      const indexSelectedCard = [...cardContainer.children].findIndex(
+        (elem) => elem === e.target.parentNode
+      );
+      e.target.src = window.application.cards[indexSelectedCard].src;
     })
   );
   function fivesec() {
