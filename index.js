@@ -1,3 +1,5 @@
+
+
 window.application.screens["open"] = renderOpenScreen;
 window.application.screens["game"] = renderGameScreen;
 
@@ -203,15 +205,15 @@ function renderGameBlock(container) {
   cardContainer.classList.add("cardContainer");
   if (window.application.dif === 1) {
     gamePairs[2].sort(() => Math.random() - 0.5);
-    window.application.cards.push(gamePairs[2]);
+    window.application.cards = gamePairs[2];
     cardContainer.appendChild(templateEngine(gamePairs[2].map(cardTemplate)));
   } else if (window.application.dif === 2) {
     gamePairs[5].sort(() => Math.random() - 0.5);
-    window.application.cards.push(gamePairs[5]);
+    window.application.cards = gamePairs[5];
     cardContainer.appendChild(templateEngine(gamePairs[5].map(cardTemplate)));
   } else if (window.application.dif === 3) {
     gamePairs[8].sort(() => Math.random() - 0.5);
-    window.application.cards.push(gamePairs[8]);
+    window.application.cards = gamePairs[8];
     cardContainer.appendChild(templateEngine(gamePairs[8].map(cardTemplate)));
   }
 
@@ -224,7 +226,18 @@ function renderGameBlock(container) {
       const indexSelectedCard = [...cardContainer.children].findIndex(
         (elem) => elem === e.target.parentNode
       );
-      e.target.src = window.application.cards[indexSelectedCard].src;
+      e.target.value = window.application.cards[indexSelectedCard].value;
+      if (window.application.selectedCard === 0) {
+        window.application.selectedCard = e.target.value;
+        e.target.src = window.application.cards[indexSelectedCard].src;
+      } else {
+        if (e.target.value === window.application.selectedCard) {
+          e.target.src = window.application.cards[indexSelectedCard].src;
+          window.application.selectedCard = 0;
+        } else {
+          alert("lose")
+        }
+      }
     })
   );
   function fivesec() {
