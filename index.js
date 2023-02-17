@@ -1,10 +1,9 @@
-
-
 window.application.screens["open"] = renderOpenScreen;
 window.application.screens["game"] = renderGameScreen;
 
 window.application.blocks["open-content"] = renderOpenContent;
 window.application.blocks["game-block"] = renderGameBlock;
+window.application.blocks["gameWin-block"] = renderWinBlock;
 
 cardsBack = [
   { src: "./cards/рубашка.jpg", value: "cardBack" },
@@ -190,15 +189,46 @@ function renderGameBlock(container) {
   sec.classList.add("sec");
   const gameTime = document.createElement("div");
   gameTime.classList.add("gameTime");
-  gameTime.textContent = "00.00";
+  const gameTimeMin = document.createElement("div");
+  gameTimeMin.classList.add("gameTime");
+  gameTimeMin.innerText = "00.";
+  const gameTimeSec = document.createElement("div");
+  gameTimeSec.classList.add("gameTime");
+  gameTimeSec.innerText = "00";
   timer.appendChild(min);
   timer.appendChild(sec);
   timer.appendChild(gameTime);
+  gameTime.appendChild(gameTimeMin);
+  gameTime.appendChild(gameTimeSec);
   headerDiv.appendChild(timer);
+
+  let minute = 00;
+  let second = 00;
+  let timerInterval;
+  function Timer() {
+    second++;
+    if (second < 9) {
+      gameTimeSec.innerText = "0" + second;
+    }
+    if (second > 9) {
+      gameTimeSec.innerText = second;
+    }
+    if (second > 60) {
+      minute++;
+      gameTimeMin.innerText = "0" + minute;
+      second = 0;
+      gameTimeSec.innerText = "0" + second;
+    }
+  }
 
   const btn = document.createElement("button");
   btn.classList.add("button");
   btn.textContent = "Начать заново";
+  btn.addEventListener("click", () => {
+    window.application.selectedCard = 0;
+    window.application.win = 0;
+    window.application.renderScreen("open");
+  });
   headerDiv.appendChild(btn);
 
   const cardContainer = document.createElement("div");
@@ -239,7 +269,7 @@ function renderGameBlock(container) {
         } else {
           window.application.selectedCard = 0;
           window.application.win = 0;
-          alert("lose")
+          alert("lose");
           window.application.renderScreen("open");
         }
       }
@@ -247,12 +277,14 @@ function renderGameBlock(container) {
   );
   function win() {
     if (window.application.win === 6 && window.application.dif === 1) {
-      alert('win');
+      window.application.renderBlock("gameWin-block", container);
       clearInterval(winTimer);
     } else if (window.application.win === 12 && window.application.dif === 2) {
-      alert('win');
+      alert("win");
+      clearInterval(winTimer);
     } else if (window.application.win === 18 && window.application.dif === 3) {
-      alert('win');
+      alert("win");
+      clearInterval(winTimer);
     }
   }
   const winTimer = setInterval(win, 100);
@@ -260,8 +292,49 @@ function renderGameBlock(container) {
     gameCard.forEach((cardImg) => {
       cardImg.src = cardsBack[0].src;
     });
+    clearInterval(timerInterval);
+    timerInterval = setInterval(Timer, 1000);
   }
   setTimeout(fivesec, 5000);
+}
+
+function renderWinBlock(container) {
+  const grayDiv = document.createElement("div");
+  grayDiv.classList.add("gray");
+  const winWindow = document.createElement("div");
+  winWindow.classList.add("winWindow");
+  const img = document.createElement("img");
+  img.classList.add("emodji");
+  img.src = "./images/win.svg";
+  const title = document.createElement("h1");
+  title.textContent = "Вы выиграли!";
+  title.classList.add("gameTitle");
+  const playerTime = document.createElement("div");
+  playerTime.classList.add("playerTime");
+  const subtitle = document.createElement("h2");
+  subtitle.textContent = "Затраченное время:";
+  subtitle.classList.add("gameSubtitle");
+  const playerRecord = document.createElement("p");
+  playerRecord.textContent = "00.00";
+  playerRecord.classList.add("playerRecord");
+  const btn = document.createElement("button");
+  btn.classList.add("button");
+  btn.textContent = "Играть снова";
+  btn.addEventListener("click", () => {
+    window.application.selectedCard = 0;
+    window.application.win = 0;
+    window.application.renderScreen("open");
+  });
+
+  
+  playerTime.appendChild(subtitle);
+  playerTime.appendChild(playerRecord);
+  winWindow.appendChild(img);
+  winWindow.appendChild(title);
+  winWindow.appendChild(playerTime);
+  winWindow.appendChild(btn);
+  container.appendChild(grayDiv);
+  container.appendChild(winWindow);
 }
 
 for (let i = 0; i < 9; i++) {
