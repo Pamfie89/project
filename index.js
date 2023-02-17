@@ -230,16 +230,32 @@ function renderGameBlock(container) {
       if (window.application.selectedCard === 0) {
         window.application.selectedCard = e.target.value;
         e.target.src = window.application.cards[indexSelectedCard].src;
+        window.application.win = window.application.win + 1;
       } else {
         if (e.target.value === window.application.selectedCard) {
           e.target.src = window.application.cards[indexSelectedCard].src;
           window.application.selectedCard = 0;
+          window.application.win = window.application.win + 1;
         } else {
+          window.application.selectedCard = 0;
+          window.application.win = 0;
           alert("lose")
+          window.application.renderScreen("open");
         }
       }
     })
   );
+  function win() {
+    if (window.application.win === 6 && window.application.dif === 1) {
+      alert('win');
+      clearInterval(winTimer);
+    } else if (window.application.win === 12 && window.application.dif === 2) {
+      alert('win');
+    } else if (window.application.win === 18 && window.application.dif === 3) {
+      alert('win');
+    }
+  }
+  const winTimer = setInterval(win, 100);
   function fivesec() {
     gameCard.forEach((cardImg) => {
       cardImg.src = cardsBack[0].src;
