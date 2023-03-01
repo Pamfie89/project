@@ -5,38 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Twin-Cards</title>
-    <link rel="stylesheet" href="index.css" />
   </head>
   <body>
     <div class="app"></div>
-
-    <script>
-      window.application = {
-        blocks: {},
-        screens: {},
-        renderScreen: function (screenName) {
-          window.application.timers.forEach((id) => {
-            clearInterval(id);
-          });
-          window.application.screens[`${screenName}`](
-            document.querySelector(".app")
-          );
-        },
-        renderBlock: function (blockName, container) {
-          window.application.blocks[`${blockName}`](container);
-        },
-        timers: [],
-        time: {},
-        dif: 0,
-        cards: [],
-        selectedCard: 0,
-        win: 0,
-      };
-    </script>
-    <script src="request.js"></script>
-    <script src="template-engine.js"></script>
-    <script src="index.js"></script>
-
-    <script></script>
   </body>
 </html>
