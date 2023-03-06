@@ -26,7 +26,7 @@ window.application = {
   cards: [],
   selectedCard: 0,
   win: 0,
-  timeResult: '00.00',
+  timeResult: "00.00",
 };
 
 window.application.screens["open"] = renderOpenScreen;
@@ -37,9 +37,7 @@ window.application.blocks["game-block"] = renderGameBlock;
 window.application.blocks["gameWin-block"] = renderWinBlock;
 window.application.blocks["gameLose-block"] = renderLoseBlock;
 
-const cardsBack = [
-  { src: "./static/рубашка.jpg", value: "cardBack" },
-];
+const cardsBack = [{ src: "./static/рубашка.jpg", value: "cardBack" }];
 const cards = [
   { src: "./static/6 бубны.jpg", value: "Б6" },
   { src: "./static/6 крести.jpg", value: "К6" },
@@ -92,6 +90,7 @@ function cardTemplate(card) {
     },
   };
 }
+
 let cardResult = [];
 let gamePairs = [];
 
@@ -101,14 +100,18 @@ window.addEventListener("DOMContentLoaded", function () {
 
 function renderOpenScreen() {
   const app = document.querySelector(".app");
-  app.textContent = "";
+  if (app) {
+    app.textContent = "";
+  }
 
   const content = document.createElement("div");
   content.classList.add("openContent");
 
   window.application.renderBlock("open-content", content);
 
-  app.appendChild(content);
+  if (app) {
+    app.appendChild(content);
+  }
 }
 
 function renderOpenContent(container) {
@@ -162,14 +165,18 @@ function renderOpenContent(container) {
 
 function renderGameScreen() {
   const app = document.querySelector(".app");
-  app.textContent = "";
+  if (app) {
+    app.textContent = "";
+  }
 
   const content = document.createElement("div");
   content.classList.add("gameContent");
 
   window.application.renderBlock("game-block", content);
 
-  app.appendChild(content);
+  if (app) {
+    app.appendChild(content);
+  }
 }
 
 function renderGameBlock(container) {
@@ -206,7 +213,6 @@ function renderGameBlock(container) {
     second++;
     if (second < 9) {
       gameTimeSec.innerText = "0" + second;
-      
     }
     if (second > 9) {
       gameTimeSec.innerText = second;
@@ -217,7 +223,7 @@ function renderGameBlock(container) {
       second = 0;
       gameTimeSec.innerText = "0" + second;
     }
-    window.application.timeResult = '0' + minute + "." + second;
+    window.application.timeResult = "0" + minute + "." + second;
   }
 
   const btn = document.createElement("button");
@@ -329,7 +335,7 @@ function renderWinBlock(container) {
   });
   const winWindowDiv = document.createElement("div");
   winWindowDiv.classList.add("winWindowDiv");
-  
+
   winWindow.appendChild(winWindowDiv);
   playerTime.appendChild(subtitle);
   playerTime.appendChild(playerRecord);
@@ -370,7 +376,7 @@ function renderLoseBlock(container) {
   });
   const winWindowDiv = document.createElement("div");
   winWindowDiv.classList.add("winWindowDiv");
-  
+
   winWindow.appendChild(winWindowDiv);
   playerTime.appendChild(subtitle);
   playerTime.appendChild(playerRecord);
@@ -381,7 +387,6 @@ function renderLoseBlock(container) {
   container.appendChild(grayDiv);
   container.appendChild(winWindow);
 }
-
 
 for (let i = 0; i < 9; i++) {
   let randomIndex = Math.floor(Math.random() * (cards.length - i)) + i;
