@@ -8,6 +8,8 @@ declare global {
   }
 }
 
+type Card = {src: string, value: string}
+
 window.application = {
   blocks: {},
   screens: {},
@@ -38,7 +40,7 @@ window.application.blocks["gameWin-block"] = renderWinBlock;
 window.application.blocks["gameLose-block"] = renderLoseBlock;
 
 const cardsBack = [{ src: "./static/рубашка.jpg", value: "cardBack" }];
-const cards = [
+const cards: Card[] = [
   { src: "./static/6 бубны.jpg", value: "Б6" },
   { src: "./static/6 крести.jpg", value: "К6" },
   { src: "./static/6 пики.jpg", value: "П6" },
@@ -91,8 +93,8 @@ function cardTemplate(card) {
   };
 }
 
-let cardResult = [];
-let gamePairs = [];
+let cardResult: [] = [];
+let gamePairs: Array<Array> = [];
 
 window.addEventListener("DOMContentLoaded", function () {
   window.application.renderScreen("open");
@@ -258,17 +260,18 @@ function renderGameBlock(container) {
   gameCard.forEach((cardImg) =>
     cardImg.addEventListener("click", (e) => {
       e.preventDefault();
+      const target = e.target as Element;
       const indexSelectedCard = [...cardContainer.children].findIndex(
-        (elem) => elem === e.target.parentNode
+        (elem) => elem === target.parentNode
       );
-      e.target.value = window.application.cards[indexSelectedCard].value;
+      target.value = window.application.cards[indexSelectedCard].value;
       if (window.application.selectedCard === 0) {
-        window.application.selectedCard = e.target.value;
-        e.target.src = window.application.cards[indexSelectedCard].src;
+        window.application.selectedCard = target.value;
+        target.src = window.application.cards[indexSelectedCard].src;
         window.application.win = window.application.win + 1;
       } else {
-        if (e.target.value === window.application.selectedCard) {
-          e.target.src = window.application.cards[indexSelectedCard].src;
+        if (target.value === window.application.selectedCard) {
+          target.src = window.application.cards[indexSelectedCard].src;
           window.application.selectedCard = 0;
           window.application.win = window.application.win + 1;
         } else {
