@@ -4,11 +4,23 @@ import "./index.css";
 
 declare global {
   interface Window {
-    application?: any;
+    application?: {
+      timeResult: string,
+      win: number,
+      selectedCard: number,
+      dif: number,
+      timers: ,
+      cards: ,
+      blocks: Record<string, (container: HTMLElement) => void>,
+      screens: Record<string, (container: HTMLElement) => void>,
+      renderBlock: (blockName: string, container: HTMLElement) => void,
+      renderScreen: (screenName: string, container: HTMLElement) => void
+    };
   }
 }
 
-type Card = {src: string, value: string}
+type Card = { src: string; value: string };
+const app = document.querySelector(".app") as HTMLElement;
 
 window.application = {
   blocks: {},
@@ -17,13 +29,12 @@ window.application = {
     window.application.timers.forEach((id) => {
       clearInterval(id);
     });
-    window.application.screens[`${screenName}`](document.querySelector(".app"));
+    window.application.screens[`${screenName}`](app);
   },
   renderBlock: function (blockName, container) {
     window.application.blocks[`${blockName}`](container);
   },
   timers: [],
-  time: {},
   dif: 0,
   cards: [],
   selectedCard: 0,
@@ -93,8 +104,8 @@ function cardTemplate(card) {
   };
 }
 
-let cardResult: [] = [];
-let gamePairs: Array<Array> = [];
+let cardResult: Array<Card> = [];
+let gamePairs: Array<Array<Card>> = [];
 
 window.addEventListener("DOMContentLoaded", function () {
   window.application.renderScreen("open");
@@ -149,7 +160,7 @@ function renderOpenContent(container) {
   btn.textContent = "Старт";
   btn.classList.add("button");
   btn.addEventListener("click", () => {
-    if (!window.application.dif >= 1) {
+    if (window.application.dif < 1) {
       alert("Выберите уровень сложности!");
     } else {
       window.application.renderScreen("game");
@@ -217,7 +228,7 @@ function renderGameBlock(container) {
       gameTimeSec.innerText = "0" + second;
     }
     if (second > 9) {
-      gameTimeSec.innerText = second;
+      gameTimeSec.innerText = "." + second;
     }
     if (second > 60) {
       minute++;
@@ -260,18 +271,18 @@ function renderGameBlock(container) {
   gameCard.forEach((cardImg) =>
     cardImg.addEventListener("click", (e) => {
       e.preventDefault();
-      const target = e.target as Element;
+      const target = e.target as HTMLElement;
       const indexSelectedCard = [...cardContainer.children].findIndex(
         (elem) => elem === target.parentNode
       );
-      target.value = window.application.cards[indexSelectedCard].value;
+      target.dataset.value = window.application.cards[indexSelectedCard].value;
       if (window.application.selectedCard === 0) {
-        window.application.selectedCard = target.value;
-        target.src = window.application.cards[indexSelectedCard].src;
+        window.application.selectedCard = target.dataset.value;
+        target.dataset.src = window.application.cards[indexSelectedCard].src;
         window.application.win = window.application.win + 1;
       } else {
-        if (target.value === window.application.selectedCard) {
-          target.src = window.application.cards[indexSelectedCard].src;
+        if (target.dataset.value === window.application.selectedCard) {
+          target.dataset.src = window.application.cards[indexSelectedCard].src;
           window.application.selectedCard = 0;
           window.application.win = window.application.win + 1;
         } else {
@@ -301,7 +312,8 @@ function renderGameBlock(container) {
   const winTimer = setInterval(win, 100);
   function fivesec() {
     gameCard.forEach((cardImg) => {
-      cardImg.src = cardsBack[0].src;
+      const cardImgs = cardImg as HTMLImageElement;
+      cardImgs.src = cardsBack[0].src;
     });
     clearInterval(timerInterval);
     timerInterval = setInterval(Timer, 1000);
