@@ -8,7 +8,7 @@ const mode =
   process.env.NODE_ENV === "production" ? "production" : "development";
 
 module.exports = {
-  entry: "./src/index.js",
+  entry: "./src/index.ts",
   mode,
   module: {
     rules: [
