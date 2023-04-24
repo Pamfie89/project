@@ -4,13 +4,15 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
     "format": "prettier --write ./src/",
     "lint:js": "eslint ./src/**/*.js",
     "lint:css": "stylelint ./src/**/*.css",
     "lint:ts": "tsc --noEmit",
     "start": "webpack-dev-server --open",
-    "build": "cross-env NODE_ENV=production webpack"
+    "build": "cross-env NODE_ENV=production webpack",
+    "prepare": "husky install",
+    "lint": "npm run lint:js && npm run lint:css"
   },
   "repository": {
     "type": "git",
@@ -27,6 +29,11 @@
     "webpack-dev-server": "^4.11.1"
   },
   "devDependencies": {
+    "@babel/preset-env": "^7.21.4",
+    "@babel/preset-typescript": "^7.21.4",
+    "@jest/globals": "^29.5.0",
+    "@testing-library/dom": "^9.2.0",
+    "@testing-library/jest-dom": "^5.16.5",
     "axios": "^1.2.3",
     "copy-webpack-plugin": "^11.0.0",
     "cross-env": "^7.0.3",
@@ -36,6 +43,9 @@
     "eslint-config-prettier": "^8.6.0",
     "eslint-plugin-prettier": "^4.2.1",
     "html-webpack-plugin": "^5.5.0",
+    "husky": "^8.0.3",
+    "jest": "^29.5.0",
+    "jest-environment-jsdom": "^29.5.0",
     "mini-css-extract-plugin": "^2.7.2",
     "prettier": "^2.8.3",
     "stylelint": "^14.16.1",
@@ -43,6 +53,7 @@
     "stylelint-config-standard": "^29.0.0",
     "stylelint-prettier": "^2.0.0",
     "ts-loader": "^9.4.2",
+    "ts-node": "^10.9.1",
     "typescript": "^4.9.5",
     "webpack": "^5.75.0",
     "webpack-cli": "^5.0.1"
