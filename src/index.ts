@@ -1,4 +1,3 @@
-import { request } from "./request";
 import { templateEngine } from "./template-engine";
 import "./index.css";
 
@@ -6,20 +5,19 @@ type Card = { src: string; value: string };
 declare global {
   interface Window {
     application: {
-      timeResult: string,
-      win: number,
-      selectedCard: string,
-      dif: number,
-      timers: ReturnType<typeof setTimeout>[],
-      cards: Card[],
-      blocks: Record<string, (container: HTMLElement) => void>,
-      screens: Record<string, (container: HTMLElement) => void>,
-      renderBlock: (blockName: string, container: HTMLElement) => void,
-      renderScreen: (screenName: string) => void
+      timeResult: string;
+      win: number;
+      selectedCard: string;
+      dif: number;
+      timers: ReturnType<typeof setTimeout>[];
+      cards: Card[];
+      blocks: Record<string, (container: HTMLElement) => void>;
+      screens: Record<string, (container: HTMLElement) => void>;
+      renderBlock: (blockName: string, container: HTMLElement) => void;
+      renderScreen: (screenName: string) => void;
     };
   }
 }
-
 
 const app = document.querySelector(".app") as HTMLElement;
 
@@ -112,7 +110,7 @@ window.addEventListener("DOMContentLoaded", function () {
   window.application.renderScreen("open");
 });
 
-function renderOpenScreen() {
+export function renderOpenScreen() {
   const app = document.querySelector(".app");
   if (app) {
     app.textContent = "";
@@ -128,7 +126,7 @@ function renderOpenScreen() {
   }
 }
 
-function renderOpenContent(container) {
+export function renderOpenContent(container) {
   const title = document.createElement("h1");
   title.textContent = "Выбери сложность";
   title.classList.add("openTitle");
@@ -177,7 +175,7 @@ function renderOpenContent(container) {
   container.appendChild(btn);
 }
 
-function renderGameScreen() {
+export function renderGameScreen() {
   const app = document.querySelector(".app");
   if (app) {
     app.textContent = "";
@@ -193,7 +191,7 @@ function renderGameScreen() {
   }
 }
 
-function renderGameBlock(container) {
+export function renderGameBlock(container) {
   const headerDiv = document.createElement("div");
   headerDiv.classList.add("headerDiv");
 
@@ -279,7 +277,7 @@ function renderGameBlock(container) {
       target.dataset.value = window.application.cards[indexSelectedCard].value;
       if (window.application.selectedCard === "0") {
         window.application.selectedCard = target.dataset.value;
-        target.src = window.application.cards[indexSelectedCard].src;  
+        target.src = window.application.cards[indexSelectedCard].src;
         window.application.win = window.application.win + 1;
       } else {
         if (target.dataset.value === window.application.selectedCard) {
@@ -409,5 +407,4 @@ for (let i = 0; i < 9; i++) {
   cardResult.push(cards[randomIndex]);
   let result = cardResult.concat(cardResult);
   gamePairs.push(result);
-  console.log(gamePairs);
 }
